@@ -1,0 +1,6 @@
+package-as: DevouringWatch
+ignore:
+  - .pkgmeta
+  - .gitignore
+  - .github
+  - README.md
