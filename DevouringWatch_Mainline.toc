@@ -1,6 +1,6 @@
-## Interface: 120007
+﻿## Interface: 120005
 ## Title: |cFF9966FFDevouringWatch|r
-## Notes: Void Assault Escalation tracker — monitors active Void world, assault timers, Field Accolades, and Voidlight Marl progress.
+## Notes: Void Assault Escalation tracker - monitors active Void world, assault timers, Field Accolades, and Voidlight Marl progress.
 ## Author: Nelnamara
 ## Version: 1.0.0
 ## SavedVariables: DevouringWatchDB
