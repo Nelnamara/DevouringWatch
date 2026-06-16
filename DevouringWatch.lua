@@ -43,7 +43,7 @@ function DW:GetMapEvents()
     local results = {}
 
     for _, poiID in ipairs(poiIDs) do
-        local info      = C_AreaPoiInfo.GetAreaPOIInfo(poiID)
+        local info      = C_AreaPoiInfo.GetAreaPOIInfo(mapID, poiID)
         local secsLeft  = C_AreaPoiInfo.GetAreaPOISecondsLeft(poiID)
         if info then
             results[#results + 1] = {
