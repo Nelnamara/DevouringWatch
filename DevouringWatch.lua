@@ -15,6 +15,15 @@ DW.version = "1.0.0"
 local CURRENCY_FIELD_ACCOLADE = 3405
 local CURRENCY_VOIDLIGHT_MARL = 3316
 
+-- One-time unlock quest from Ranger Captain Lilatha in Silvermoon City
+local INTRO_QUEST = 96080
+
+-- Weekly Void Assault quests — one per zone, rotate weekly
+local WEEKLY_ASSAULT_QUESTS = {
+    { id = 94385, zone = "Eversong Woods" },
+    { id = 94386, zone = "Zul'Aman"       },
+}
+
 local DEFAULTS = {
     x      = -400,
     y      =  200,
@@ -84,6 +93,34 @@ function DW:GetCurrencies()
         accolade = safe(CURRENCY_FIELD_ACCOLADE),
         marl     = safe(CURRENCY_VOIDLIGHT_MARL),
     }
+end
+
+-- Returns the active weekly Void Assault quest state, or a "locked/none" sentinel.
+-- Weekly quest IDs are proper weekly quests (not isTask), so GetTaskQuests() misses
+-- them — we check explicitly by questID here.
+function DW:GetWeeklyAssaultQuest()
+    local unlocked = C_QuestLog.IsQuestFlaggedCompleted(INTRO_QUEST)
+    if not unlocked then
+        return { locked = true }
+    end
+
+    local numEntries = C_QuestLog.GetNumQuestLogEntries()
+    for _, q in ipairs(WEEKLY_ASSAULT_QUESTS) do
+        -- First check quest log (in progress this week)
+        for i = 1, numEntries do
+            local info = C_QuestLog.GetInfo(i)
+            if info and not info.isHeader and info.questID == q.id then
+                local pct = GetQuestProgressBarPercent(q.id) or 0
+                return { zone = q.zone, inLog = true, done = false, pct = pct }
+            end
+        end
+        -- Then check if completed this reset
+        if C_QuestLog.IsQuestFlaggedCompleted(q.id) then
+            return { zone = q.zone, inLog = false, done = true }
+        end
+    end
+
+    return { locked = false, none = true }
 end
 
 local ROW_H   = 18
@@ -176,6 +213,20 @@ function DW:Refresh()
 
     if not hasEvents then
         lines[#lines + 1] = "|cFF666666No zone events active|r"
+    end
+
+    -- Weekly Void Assault quest (proper weekly, not isTask — checked explicitly)
+    lines[#lines + 1] = "sep"
+    local wa = self:GetWeeklyAssaultQuest()
+    if wa.locked then
+        lines[#lines + 1] = "|cFF666666Void Assaults locked — pick up intro quest in Silvermoon|r"
+    elseif wa.done then
+        lines[#lines + 1] = "|cFF66FF66Weekly Assault: " .. wa.zone .. " — DONE|r"
+    elseif wa.inLog then
+        local pctStr = wa.pct > 0 and string.format(" |cFFFFDD88%.0f%%|r", wa.pct) or ""
+        lines[#lines + 1] = "|cFFCC99FFWeekly Assault: " .. wa.zone .. "|r" .. pctStr
+    elseif wa.none then
+        lines[#lines + 1] = "|cFF888888Weekly Assault: no quest active this week|r"
     end
 
     -- Task quest progress (Void Strikes etc.)
