@@ -313,23 +313,10 @@ function DW:BuildMinimapButton()
     btn:RegisterForDrag("LeftButton")
     btn:RegisterForClicks("AnyUp")
 
-    local icon = btn:CreateTexture(nil, "BACKGROUND")
+    -- Self-contained round icon (gold ring baked in) — SetAllPoints centers it cleanly.
+    local icon = btn:CreateTexture(nil, "ARTWORK")
     icon:SetAllPoints()
     icon:SetTexture("Interface\\AddOns\\DevouringWatch\\Media\\minimap.png")
-    icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-
-    if btn.CreateMaskTexture then
-        local mask = btn:CreateMaskTexture()
-        mask:SetAllPoints(icon)
-        mask:SetTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask",
-            "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-        icon:AddMaskTexture(mask)
-    end
-
-    local border = btn:CreateTexture(nil, "OVERLAY")
-    border:SetSize(54, 54)
-    border:SetPoint("CENTER")
-    border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
 
     btn:SetPoint("CENTER", Minimap, "CENTER", DWAngleOffset(db.minimapAngle or 225))
 
