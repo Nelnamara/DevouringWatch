@@ -9,7 +9,7 @@
 DevouringWatch = {}
 local DW = DevouringWatch
 
-DW.version = "1.0.0"
+DW.version = "1.0.1"
 
 -- Currency IDs confirmed for 12.0.7
 local CURRENCY_FIELD_ACCOLADE = 3405
