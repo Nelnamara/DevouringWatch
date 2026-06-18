@@ -9,7 +9,7 @@
 DevouringWatch = {}
 local DW = DevouringWatch
 
-DW.version = "1.0.1"
+DW.version = "1.0.2"
 
 -- Currency IDs confirmed for 12.0.7
 local CURRENCY_FIELD_ACCOLADE = 3405
@@ -306,7 +306,7 @@ function DW:BuildMinimapButton()
     if self.minimapBtn then return end
     local db = self.db
     local btn = CreateFrame("Button", "DWMinimapButton", Minimap)
-    btn:SetSize(32, 32)
+    btn:SetSize(24, 24)
     btn:SetFrameStrata("MEDIUM")
     btn:SetFrameLevel(8)
     btn:EnableMouse(true)
