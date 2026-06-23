@@ -4,6 +4,9 @@ Void Assault / zone-event tracker for **WoW Midnight 12.0.7+**. Author: Nelnamar
 Scans the current map for timed events, tracks the weekly Void Assault quests and
 the Field Accolade / Voidlight Marl currencies, and has a minimap button.
 
+## ⚠️ Superseded — merged into OmniumObservator (2026)
+As of **OmniumObservator v1.0.5**, DevouringWatch's Void Assault tracking (POI scan, weekly assault quests, Field Accolade / Voidlight Marl currencies) was **merged into OmniumObservator** as its "Devouring Watch" panel. The standalone addon is **retired** — new work goes into OmniumObservator. This repo stays at **1.0.2** for legacy installs; the data/API notes below remain accurate and are mirrored in the OmniumObservator code.
+
 ## Files
 - `DevouringWatch.lua` — single-file addon (UI, scan, quests, currencies, minimap button, slash).
 
